@@ -2,7 +2,8 @@
 const Login = require('../models/login')
 const Users = require('../models/users')
 const Staffs = require('../models/staffs')
-const Customer = require('../models/customer')
+const IdCustomer = require('../models/insertCustomer')
+const Customers = require('../models/customer')
 class ApiController {
 
     login(req, res) {
@@ -19,16 +20,13 @@ class ApiController {
         }) 
     }
 
-    customer(req, res) {
+    insert(req, res) {
 
         const data = req.body 
         console.log(data)
-        Customer.insert(data, function (response){
-            if(response.length > 0) {
+        IdCustomer.insert(data, function (response){
                 res.json(response)
-            } else {
-                res.json(null)
-            }   
+ 
         }) 
     }
 
@@ -45,6 +43,15 @@ class ApiController {
         Staffs.api(function(staffs) {
             
             res.json(staffs);
+        })
+        
+    }
+
+    customers(req, res) {
+
+        Customers.api(function(customers) {
+            
+            res.json(customers);
         })
         
     }
