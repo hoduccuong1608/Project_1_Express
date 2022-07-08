@@ -2,9 +2,11 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const {engine} = require('express-handlebars');
+const bodyParser = require('body-parser');
 const route = require('./routes');
 const app = express();
 const port = 5000;
+
 
 
 app.use((req, res, next) => {
@@ -20,10 +22,10 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use(express.urlencoded({
-  extended: true
+app.use(bodyParser.urlencoded({
+  extended: false
 }));
-app.use(express.json());
+app.use(bodyParser.json());
 // http log
 app.use(morgan('combined'))
 // Template engine
