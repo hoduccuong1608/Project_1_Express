@@ -2,24 +2,41 @@
 const Login = require('../models/login')
 const Users = require('../models/users')
 const Staffs = require('../models/staffs')
+const Customer = require('../models/customer')
 class ApiController {
 
     login(req, res) {
 
-        const {username, password} = req.body 
+        const data = req.body 
+        console.log(data)
+        Login.accuracy(data, function (response){
+            if(response.length >0) {
+                res.json({response})
+            } else {
+                res.json(null)
+            }
+            
+        }) 
+    }
 
-        Login.accuracy(function(data) {
-            /// kiểm tra username vs pass nếu đúng trả về accessToken: thông tin nhân viên
-            res.json({data, username, password});
-        })
-        
+    customer(req, res) {
+
+        const data = req.body 
+        console.log(data)
+        Customer.insert(data, function (response){
+            if(response.length > 0) {
+                res.json(response)
+            } else {
+                res.json(null)
+            }   
+        }) 
     }
 
     users(req, res) {
 
         Users.api(function(users) {
             
-            res.json({users});
+            res.json(users);
         })
         
     }
@@ -27,7 +44,7 @@ class ApiController {
 
         Staffs.api(function(staffs) {
             
-            res.json({staffs});
+            res.json(staffs);
         })
         
     }
