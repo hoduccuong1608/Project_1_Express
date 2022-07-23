@@ -1,16 +1,15 @@
 
-const Login = require('../models/login')
+const AccoutStaffs = require('../models/accoutStaffs')
 const Users = require('../models/users')
 const Staffs = require('../models/staffs')
-const IdCustomer = require('../models/insertCustomer')
-const Customers = require('../models/customer')
+const Customers = require('../models/customers')
 class ApiController {
 
     login(req, res) {
 
         const data = req.body 
         console.log(data)
-        Login.accuracy(data, function (response){
+        AccoutStaffs.login(data, function (response){
             if(response.length >0) {
                 res.json({response})
             } else {
@@ -20,19 +19,19 @@ class ApiController {
         }) 
     }
 
-    insert(req, res) {
+    addCustomer(req, res) {
 
         const data = req.body 
         console.log(data)
-        IdCustomer.insert(data, function (response){
+        Customers.add(data, function (response){
                 res.json(response)
  
         }) 
     }
 
     users(req, res) {
-
-        Users.api(function(users) {
+        const id = req.params.id;
+        Users.api(id, function(users) {
             
             res.json(users);
         })
@@ -47,13 +46,28 @@ class ApiController {
         
     }
 
-    customers(req, res) {
+    getListCustomers(req, res) {
 
-        Customers.api(function(customers) {
+        Customers.getAll(function(customers) {
             
             res.json(customers);
         })
         
+    }
+
+    getByID(req, res) {
+        const id = req.params.id;
+        Customers.getByID(id,function(customers) {
+            
+            res.json(customers);
+        })
+    }
+
+    updateCustomer(req, res) {
+
+        const data = req.body 
+        console.log(data)
+        Customers.update(data) 
     }
 }
 

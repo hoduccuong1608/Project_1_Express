@@ -1,5 +1,5 @@
 const db = require('../db/mysql') 
-const Staffs = function(accout) {
+const Staffs = (accout) => {
     this.id_staff = accout.id_staff;
     this.full_name = accout.full_name;
     this.position = accout.position;
